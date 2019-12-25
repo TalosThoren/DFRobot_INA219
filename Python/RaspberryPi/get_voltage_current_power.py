@@ -20,6 +20,11 @@ date  2019-2-27
 import time
 from DFRobot_INA219 import INA219
 
+'''
+Revise the following two paramters according to actual reading of the INA219 and the multimeter
+for linearly calibration
+'''
+
 ina219_reading_mA = 1000
 ext_meter_reading_mA = 1000
 
@@ -28,10 +33,6 @@ ina = INA219(1, INA219.INA219_I2C_ADDRESS4)                                #Chan
 #begin return True if succeed, otherwise return False
 while not ina.begin():
     time.sleep(2)
-'''
-Revise the following two paramters according to actula reading of the INA219 and the multimeter
-for linearly calibration
-'''
 
 ina.linear_cal(ina219_reading_mA, ext_meter_reading_mA)
 
@@ -41,11 +42,24 @@ ina.linear_cal(ina219_reading_mA, ext_meter_reading_mA)
 def main():
     while True:
         time.sleep(1)
+        '''
         print ("Shunt Voltage : %.2f mV" % ina.get_shunt_voltage_mV())
         print ("Bus Voltage   : %.3f V" % ina.get_bus_voltage_V())
         print ("Current       : %.f mA" % ina.get_current_mA())
         print ("Power         : %.f mW" % ina.get_power_mW())
         print (" ")
+        '''
+        print( _readSensorValues() )
+
+def _readSensorValues():
+    sensorValues = {
+        "ShuntVoltage": ina.get_shunt_voltage_mV(),
+        "BusVoltage": ina.get_bus_voltage_V(),
+        "CurrentMilliAmps": ina.get_current_mA(),
+        "PowerMilliWatts": ina.get_power_mW()
+    }
+    return sensorValues
+
 
 if __name__ == "__main__":
     main()
