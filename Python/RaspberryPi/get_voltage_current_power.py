@@ -30,7 +30,7 @@ ina219_reading_mA = 1000
 ext_meter_reading_mA = 1000
 
 #Change I2C address by dialing DIP switch
-ina = INA219(1, INA219.INA219_I2C_ADDRESS4)                                
+ina = INA219(1, INA219.INA219_I2C_ADDRESS4)
 
 #begin return True if succeed, otherwise return False
 while not ina.begin():
@@ -46,7 +46,7 @@ def main():
         time.sleep(1)
         sensorValues = _readSensorValues()
         logger.info( "%s", sensorValues )
-        
+
 def _readSensorValues():
     sensorValues = {
         "ShuntVoltage": ina.get_shunt_voltage_mV(),
